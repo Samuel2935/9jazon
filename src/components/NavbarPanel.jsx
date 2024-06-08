@@ -31,7 +31,7 @@ const NavbarPanel = () => {
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
               <Nav>
-                <div className='hover:bg-blue-500 rounded-md text-white'><Button variant="" to='/signin' as={Link} >Sign in</Button></div>
+                <div className='hover:bg-blue-100 rounded-md text-white'><Button variant="" to='/signin' as={Link} >Sign in</Button></div>
                 <Nav.Link
                   to="/cart"
                   as={Link}
