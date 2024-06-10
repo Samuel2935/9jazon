@@ -1,4 +1,4 @@
-
+import { SignedIn, SignedOut, UserButton, useClerk } from '@clerk/clerk-react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -6,6 +6,26 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import { ShoppingCart } from 'lucide-react';
+
+function SignUpButton() {
+  const clerk = useClerk();
+
+  return (
+    <button className="sign-up-btn" onClick={() => clerk.openSignUp({})}>
+      Sign up
+    </button>
+  );
+}
+
+function SignInButton() {
+  const clerk = useClerk();
+
+  return (
+    <button className="sign-in-btn" onClick={() => clerk.openSignIn({})}>
+      Sign in
+    </button>
+  );
+}
 
 const NavbarPanel = () => {
   const countCart = useSelector((state) => state.cart);
@@ -31,15 +51,34 @@ const NavbarPanel = () => {
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text>
               <Nav>
-                <div className='hover:bg-blue-100 rounded-md text-white'><Button variant="" to='/signin' as={Link} >Sign in</Button></div>
-                <Nav.Link
+                <div className="flex">
+                  <nav className='nav_bar'>
+                    <SignedOut>
+                      <ul>
+                        <li>
+                          <SignUpButton />
+                        </li>
+
+                        <li>
+                          <SignInButton />
+                        </li>
+                      </ul>
+                    </SignedOut>
+
+                    <SignedIn>
+                      <UserButton afterSignOutUrl="/" />
+                    </SignedIn>
+                  </nav>
+                  <Nav.Link
                   to="/cart"
                   as={Link}
                   data-count={countCart.length}
                   className="cart_btn"
                 >
-                  <ShoppingCart />
+                  <ShoppingCart className='text-blue-500' />
                 </Nav.Link>
+                </div>
+              
               </Nav>
             </Navbar.Text>
           </Navbar.Collapse>
