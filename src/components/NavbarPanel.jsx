@@ -4,7 +4,6 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Button from 'react-bootstrap/Button';
 import { ShoppingCart } from 'lucide-react';
 
 function SignUpButton() {
@@ -27,8 +26,11 @@ function SignInButton() {
   );
 }
 
+
+
 const NavbarPanel = () => {
   const countCart = useSelector((state) => state.cart);
+  
   return (
     <div className="fixed top-0 left-0 right-0 z-10 ">
       <Navbar expand="lg" className="bg-body-tertiary ">

@@ -9,7 +9,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 const Product = () => {
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+
+
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
       .then((data) => data.json())
@@ -45,11 +47,18 @@ const Product = () => {
   ));
   return (
     <div>
-   {loading?<div className="row mt-5 mb-5"> {cards}</div>:(
-   <Stack className='m-5 flex justify-items-center' sx={{ color: 'grey.500' }} spacing={2} direction="row">
-   <CircularProgress color="secondary" />
- </Stack>
-   )}
+      {loading ? (
+        <div className="row mt-5 mb-5"> {cards}</div>
+      ) : (
+        <Stack
+          className="m-5 flex justify-items-center"
+          sx={{ color: 'grey.500' }}
+          spacing={2}
+          direction="row"
+        >
+          <CircularProgress color="secondary" />
+        </Stack>
+      )}
     </div>
   );
 };
