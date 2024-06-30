@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ShoppingCart } from 'lucide-react';
 
-function SignUpButton() {
-  const clerk = useClerk();
+// function SignUpButton() {
+//   const clerk = useClerk();
 
-  return (
-    <button className="sign-up-btn" onClick={() => clerk.openSignUp({})}>
-      Sign up
-    </button>
-  );
-}
+//   return (
+//     <button className="sign-up-btn" onClick={() => clerk.openSignUp({})}>
+//       Sign up
+//     </button>
+//   );
+// }
 
 function SignInButton() {
   const clerk = useClerk();
@@ -32,7 +32,7 @@ const NavbarPanel = () => {
   const countCart = useSelector((state) => state.cart);
   
   return (
-    <div className="fixed top-0 left-0 right-0 z-10 ">
+    <div className="fixed border-b top-0 left-0 right-0 z-10 ">
       <Navbar expand="lg" className="bg-body-tertiary ">
         <Container fluid>
           <Navbar.Brand
@@ -57,9 +57,9 @@ const NavbarPanel = () => {
                   <nav className='nav_bar'>
                     <SignedOut>
                       <ul>
-                        <li>
+                        {/* <li>
                           <SignUpButton />
-                        </li>
+                        </li> */}
 
                         <li>
                           <SignInButton />
@@ -67,7 +67,7 @@ const NavbarPanel = () => {
                       </ul>
                     </SignedOut>
 
-                    <SignedIn>
+                    <SignedIn >
                       <UserButton afterSignOutUrl="/" />
                     </SignedIn>
                   </nav>

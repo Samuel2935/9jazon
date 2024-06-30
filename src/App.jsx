@@ -14,7 +14,7 @@ import SignIn from './components/SignIn'
 function App() {
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<RootLayout/>}>
-      <Route index element={<Dashboard/>}></Route>
+    <Route index element={<Dashboard/>}></Route>
     <Route path = "/cart" element={<Cart/>}></Route>
     <Route path = "/signin" element={<SignIn/>}></Route>
     <Route path='*' element={<NotFound/>}></Route>
