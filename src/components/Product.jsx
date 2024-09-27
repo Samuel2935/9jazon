@@ -35,7 +35,8 @@ const Product = () => {
         </div>
         <Card.Body>
           <Card.Title>{product.title}</Card.Title>
-          <Card.Text>${product.price}</Card.Text>
+          {/* 	&#8358; &#x20A6; */}
+          <Card.Text>&#8358;{product.price}</Card.Text>
         </Card.Body>
         <Card.Footer className="bg-white">
           <Button variant="primary" onClick={() => addToCart(product)}>
@@ -49,10 +50,10 @@ const Product = () => {
     <div>
       {loading ? (
         <div className="row mt-5 mb-5"> {cards}</div>
-      ) : (
+      ) :  (
         <Stack
           className="m-5 flex justify-items-center"
-          sx={{ color: 'grey.500' }}
+          sx={{ color: 'grey' }}
           spacing={2}
           direction="row"
         >

@@ -50,7 +50,7 @@ const NavbarPanel = () => {
             </Nav.Link>
           </Nav>
           <Navbar.Toggle />
-          <Navbar.Collapse className="justify-content-end">
+          <Navbar.Collapse className="flex justify-content-end">
             <Navbar.Text>
               <Nav>
                 <div className="flex">
