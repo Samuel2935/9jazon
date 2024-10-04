@@ -53,7 +53,7 @@ const Product = () => {
       ) :  (
         <Stack
           className="m-5 flex justify-items-center"
-          sx={{ color: 'grey' }}
+          sx={{ color: 'greyy' }}
           spacing={2}
           direction="row"
         >
