@@ -39,7 +39,7 @@ const Product = () => {
           <Card.Text>&#8358;{product.price}</Card.Text>
         </Card.Body>
         <Card.Footer className="bg-white">
-          <Button variant="primary" onClick={() => addToCart(product)}>
+          <Button className="w-full rounded-md "  variant="primary" onClick={() => addToCart(product)}>
             Add to Cart
           </Button>
         </Card.Footer>
@@ -53,7 +53,7 @@ const Product = () => {
       ) :  (
         <Stack
           className="m-5 flex justify-items-center"
-          sx={{ color: 'greyy' }}
+          sx={{ color: 'gray' }}
           spacing={2}
           direction="row"
         >
