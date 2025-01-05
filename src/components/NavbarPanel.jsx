@@ -74,10 +74,14 @@ const NavbarPanel = () => {
                   <Nav.Link
                   to="/cart"
                   as={Link}
+                  // let isLoggedIn = true;
+                  // isLoggedIn ? console.log("Welcome back!") : console.log("Please log in.");
+                
                   data-count={countCart.length}
+                  
                   className="cart_btn"
                 >
-                  <ShoppingCart className='text-blue-500' />
+                  <ShoppingCart className='text-blue-500'/>
                 </Nav.Link>
                 </div>
               

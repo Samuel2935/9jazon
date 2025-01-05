@@ -17,6 +17,8 @@
     "@mui/material": "^5.15.15",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@reduxjs/toolkit": "^2.2.3",
+    "@stripe/react-stripe-js": "^3.1.1",
+    "@stripe/stripe-js": "^5.4.0",
     "bootstrap": "^5.3.3",
     "lucide": "^0.372.0",
     "lucide-react": "^0.372.0",
