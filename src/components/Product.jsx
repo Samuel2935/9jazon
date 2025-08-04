@@ -1,66 +1,195 @@
-import { useEffect, useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { add } from '../store/cartSlice';
-import Stack from '@mui/material/Stack';
-import CircularProgress from '@mui/material/CircularProgress';
+
+import {
+  Button,
+  Card,
+  Form,
+  Row,
+  Col,
+  Container,
+  Pagination,
+  Badge,
+} from 'react-bootstrap';
+import Skeleton from '@mui/material/Skeleton';
 
 const Product = () => {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart);
+
   const [products, setProducts] = useState([]);
+  const [filtered, setFiltered] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState('');
   const [loading, setLoading] = useState(true);
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 6;
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then((data) => data.json())
-      .then((result) => setProducts(result));
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch('https://fakestoreapi.com/products');
+        const data = await res.json();
+        setProducts(data);
+        setFiltered(data);
+      } catch (err) {
+        console.error('Fetch error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
   }, []);
-  console.log(products);
 
-  const addToCart = (product) => {
+  const handleAddToCart = (product) => {
     dispatch(add(product));
   };
 
-  const cards = products.map((product) => (
-    <div key={product.id} className="col-md-3">
-      <Card style={{ width: '18rem' }}>
-        <div className="m-auto">
-          <Card.Img
-            variant="top"
-            src={product.image}
-            style={{ width: '100px', height: '120px' }}
-          />
-        </div>
-        <Card.Body>
-          <Card.Title>{product.title}</Card.Title>
-          {/* 	&#8358; &#x20A6; */}
-          <Card.Text>&#8358;{product.price}</Card.Text>
-        </Card.Body>
-        <Card.Footer className="bg-white">
-          <Button className="w-full rounded-md "  variant="primary" onClick={() => addToCart(product)}>
-            Add to Cart
-          </Button>
-        </Card.Footer>
-      </Card>
-    </div>
-  ));
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    const result = products.filter((product) =>
+      product.title.toLowerCase().includes(value.toLowerCase())
+    );
+    setFiltered(applySorting(result, sortOption));
+    setCurrentPage(1);
+  };
+
+  const handleSort = (e) => {
+    const value = e.target.value;
+    setSortOption(value);
+    const sorted = applySorting(filtered, value);
+    setFiltered(sorted);
+  };
+
+  const applySorting = (data, option) => {
+    switch (option) {
+      case 'price-asc':
+        return [...data].sort((a, b) => a.price - b.price);
+      case 'price-desc':
+        return [...data].sort((a, b) => b.price - a.price);
+      case 'title-asc':
+        return [...data].sort((a, b) =>
+          a.title.localeCompare(b.title)
+        );
+      case 'title-desc':
+        return [...data].sort((a, b) =>
+          b.title.localeCompare(a.title)
+        );
+      default:
+        return data;
+    }
+  };
+
+  // Pagination logic
+  const totalPages = Math.ceil(filtered.length / productsPerPage);
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * productsPerPage;
+    return filtered.slice(start, start + productsPerPage);
+  }, [filtered, currentPage]);
+
+  const renderSkeletonCards = () => (
+    <Row className="mt-4">
+      {Array.from({ length: productsPerPage }).map((_, idx) => (
+        <Col key={idx} xs={12} sm={6} md={4} className="mb-4">
+          <Card>
+            <Skeleton variant="rectangular" height={150} />
+            <Card.Body>
+              <Skeleton variant="text" />
+              <Skeleton variant="text" width="60%" />
+            </Card.Body>
+            <Card.Footer>
+              <Skeleton variant="rectangular" height={36} />
+            </Card.Footer>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+  );
+
   return (
-    <div>
+    <Container className="my-5">
+      {/* Header */}
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h4 className="fw-bold">
+          Products{' '}
+          <Badge bg="secondary">{cartItems.length} in cart</Badge>
+        </h4>
+        <div className="d-flex gap-2">
+          <Form.Control
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+          <Form.Select value={sortOption} onChange={handleSort}>
+            <option value="">Sort</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+            <option value="title-asc">Title: A → Z</option>
+            <option value="title-desc">Title: Z → A</option>
+          </Form.Select>
+        </div>
+      </div>
+
+      {/* Product Grid */}
       {loading ? (
-        <div className="row mt-5 mb-5"> {cards}</div>
-      ) :  (
-        <Stack
-          className="m-5 flex justify-items-center"
-          sx={{ color: 'gray' }}
-          spacing={2}
-          direction="row"
-        >
-          <CircularProgress color="secondary" />
-        </Stack>
+        renderSkeletonCards()
+      ) : (
+        <>
+          <Row>
+            {paginatedProducts.map((product) => (
+              <Col key={product.id} xs={12} sm={6} md={4} className="mb-4">
+                <Card>
+                  <div className="text-center pt-3">
+                    <Card.Img
+                      variant="top"
+                      src={product.image}
+                      style={{
+                        width: '100px',
+                        height: '120px',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </div>
+                  <Card.Body>
+                    <Card.Title>{product.title}</Card.Title>
+                    <Card.Text>&#8358;{product.price}</Card.Text>
+                  </Card.Body>
+                  <Card.Footer className="bg-white">
+                    <Button
+                      variant="primary"
+                      className="w-100"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add to Cart
+                    </Button>
+                  </Card.Footer>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <Pagination className="justify-content-center">
+              {[...Array(totalPages)].map((_, idx) => (
+                <Pagination.Item
+                  key={idx + 1}
+                  active={idx + 1 === currentPage}
+                  onClick={() => setCurrentPage(idx + 1)}
+                >
+                  {idx + 1}
+                </Pagination.Item>
+              ))}
+            </Pagination>
+          )}
+        </>
       )}
-    </div>
+    </Container>
   );
 };
 

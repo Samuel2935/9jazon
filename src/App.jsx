@@ -8,6 +8,9 @@ import RootLayout from './components/RootLayout'
 import NotFound from './components/NotFound'
 import SignIn from './components/SignIn'
 import CheckoutPage from './components/CheckoutPage'
+// In your main file, e.g., index.js or App.jsx
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 // import Pay from './pages/Pay'
 
 
