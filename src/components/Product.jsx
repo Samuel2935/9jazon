@@ -10,13 +10,13 @@ import {
   Col,
   Container,
   Pagination,
-  Badge,
+  // Badge,
 } from 'react-bootstrap';
-import Skeleton from '@mui/material/Skeleton';
+// import Skeleton from '@mui/material/Skeleton';
 
 const Product = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart);
+  // const cartItems = useSelector((state) => state.cart);
 
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -92,32 +92,57 @@ const Product = () => {
   }, [filtered, currentPage]);
 
   const renderSkeletonCards = () => (
-    <Row className="mt-4">
-      {Array.from({ length: productsPerPage }).map((_, idx) => (
-        <Col key={idx} xs={12} sm={6} md={4} className="mb-4">
-          <Card>
-            <Skeleton variant="rectangular" height={150} />
-            <Card.Body>
-              <Skeleton variant="text" />
-              <Skeleton variant="text" width="60%" />
-            </Card.Body>
-            <Card.Footer>
-              <Skeleton variant="rectangular" height={36} />
-            </Card.Footer>
-          </Card>
-        </Col>
-      ))}
-    </Row>
+<Row>
+  {paginatedProducts.map((product) => (
+    <Col key={product.id} xs={12} sm={6} md={4} className="mb-4 d-flex">
+      <Card className="w-100 h-100 d-flex flex-column">
+        <div className="text-center pt-3">
+          <Card.Img
+            variant="top"
+            src={product.image}
+            style={{
+              width: '100px',
+              height: '120px',
+              objectFit: 'contain',
+            }}
+          />
+        </div>
+
+        <Card.Body className="flex-grow-1 d-flex flex-column">
+          <Card.Title
+            className="fs-6 text-truncate"
+            title={product.title}
+            style={{ lineHeight: '1.2em' }}
+          >
+            {product.title}
+          </Card.Title>
+          <Card.Text className="mt-auto">&#8358;{product.price}</Card.Text>
+        </Card.Body>
+
+        <Card.Footer className="bg-white">
+          <Button
+            variant="primary"
+            className="w-100"
+            onClick={() => handleAddToCart(product)}
+          >
+            Add to Cart
+          </Button>
+        </Card.Footer>
+      </Card>
+    </Col>
+  ))}
+</Row>
+
   );
 
   return (
     <Container className="my-5">
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h4 className="fw-bold">
+        {/* <h4 className="fw-bold">
           Products{' '}
           <Badge bg="secondary">{cartItems.length} in cart</Badge>
-        </h4>
+        </h4> */}
         <div className="d-flex gap-2">
           <Form.Control
             type="text"

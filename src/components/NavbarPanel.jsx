@@ -38,7 +38,7 @@ const NavbarPanel = () => {
           <Navbar.Brand
             style={{ color: 'royalblue', fontFamily: 'sans-serif' }}
           >
-            NAIJAZON
+            9JAZON
           </Navbar.Brand>
           <Nav>
             <Nav.Link

@@ -1,5 +1,6 @@
 
 
+// eslint-disable-next-line react/prop-types
 const OrderSummary = ({ cartItems, totalPrice }) => {
     return (
         <div>
