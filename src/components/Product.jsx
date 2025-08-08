@@ -94,7 +94,7 @@ const Product = () => {
   const renderSkeletonCards = () => (
 <Row>
   {paginatedProducts.map((product) => (
-    <Col key={product.id} xs={12} sm={6} md={4} className="mb-4 d-flex">
+    <Col key={product.id} xs={12} sm={6} md={4} className="mb-4 d-flex bg-rose-600]">
       <Card className="w-100 h-100 d-flex flex-column">
         <div className="text-center pt-3">
           <Card.Img

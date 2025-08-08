@@ -1,6 +1,7 @@
 
 // import { InterswitchPay } from "react-interswitch";
 
+
 // export default function Pay() {
 //   const props = {
 //     merchantCode: "MX189550",
