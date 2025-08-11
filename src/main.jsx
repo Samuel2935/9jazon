@@ -10,8 +10,7 @@ import { persistor, store } from './store/store.js';
 
 
 
-const publishableKey =
-  'pk_test_cmVsZXZhbnQtdW5pY29ybi01MS5jbGVyay5hY2NvdW50cy5kZXYk';
+const publishableKey=import.meta.env.VITE_CLERK_PUBLIC_KEY;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

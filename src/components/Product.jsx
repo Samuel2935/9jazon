@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { add } from '../store/cartSlice';
 
 import {
